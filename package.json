@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/mearns/PROJECT-NAME#readme",
   "engines": {
-    "node": "^10.9.0"
+    "node": "^12.14.0"
   },
   "main": "src/index.js",
   "files": [
@@ -47,7 +47,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^2.3.0",
     "mocha": "^6.1.4",
-    "node": "^10.9.0",
+    "node": "^12.14.1",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
     "pretty-quick": "^1.10.0",
