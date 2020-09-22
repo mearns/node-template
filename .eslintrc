@@ -3,6 +3,7 @@
     "rules": {
         "semi": [2, "always"],
         "no-extra-semi": 2,
+        "no-undef": "error",
         "semi-spacing": [2, { "before": false, "after": true }],
         "prettier/prettier": "error"
     }
