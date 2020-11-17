@@ -3,8 +3,7 @@
 rsync -r \
     --exclude=.git \
     --exclude=node_modules/ \
-    --exclude=out/ \
-    --exclude=.nyc_output/ \
-    --exclude=coverage/ \
+    --exclude=reports/ \
+    --exclude=public/ \
     --exclude=copy-template.sh \
     . "$1"
