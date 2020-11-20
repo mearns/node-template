@@ -27,7 +27,6 @@ jobs:
         run: |2
           echo "$VERSION"
           echo "${VERSION}"
-          echo "${{ VERSION }}"
           echo "${{ steps.version.outputs.version }}"
       - name: Update package.json
         run: |2
