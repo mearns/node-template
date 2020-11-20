@@ -39,6 +39,18 @@ jobs:
               "summary": "Unique version string created",
               "text_description": "The version string for this build has been set to **${{ steps.version.outputs.version }}** on line *${{ steps.find-version.outputs.version-line }}*"
             }
+          annotations: |2
+            [
+              {
+                "path": "package.json",
+                "start_line": ${{ steps.find-version.outputs.version-line }},
+                "end": ${{ steps.find-version.outputs.version-line }},
+                "annotation_level": "notice",
+                "message": "Version number for build set to ${{ steps.version.outputs.version }}",
+                "title": "Build version",
+                "raw_details": "{ \"version\": \"${{ steps.version.outputs.version }}\" }"
+              }
+            ]
       - name: Install Dependencies
         run: npm ci
       - name: Build
