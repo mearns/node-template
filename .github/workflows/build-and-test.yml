@@ -11,46 +11,9 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
-      - name: Extract base version
-        uses: sergeysova/jq-action@v2
-        id: base-version
-        with:
-          cmd: jq --raw-output .version package.json
       - name: Determine version string
-        uses: ./.github/actions/determine-version
+        uses: ./.github/actions/set-package-version
         id: version
-        with:
-          base-version: ${{ steps.base-version.outputs.value }}
-      - name: Update package.json
-        run: |2
-            npm --no-git-tag-version version "${{ steps.version.outputs.version }}"
-      - name: Find version
-        id: find-version
-        run: |2
-          echo "::set-output name=version-line::$( grep -n '"version"' package.json | awk 'BEGIN { FS = ":" } ; { print $1 }' )"
-      - name: Report Version
-        uses: LouisBrunner/checks-action@v1.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Version
-          conclusion: neutral
-          output: |2
-            {
-              "summary": "Unique version string created",
-              "text_description": "The version string for this build has been set to **${{ steps.version.outputs.version }}** on line *${{ steps.find-version.outputs.version-line }}*"
-            }
-          annotations: |2
-            [
-              {
-                "path": "package.json",
-                "start_line": ${{ steps.find-version.outputs.version-line }},
-                "end": ${{ steps.find-version.outputs.version-line }},
-                "annotation_level": "notice",
-                "message": "Version number for build set to ${{ steps.version.outputs.version }}",
-                "title": "Build version",
-                "raw_details": "{ \"version\": \"${{ steps.version.outputs.version }}\" }"
-              }
-            ]
       - name: Install Dependencies
         run: npm ci
       - name: Build
@@ -133,7 +96,7 @@ jobs:
               + "<span style=\"color:red\">" + (.numFailedTests|tostring) + " failed</span> | "
               + "<span style=\"color:yellow\">" + ((.numPendingTests + .numTodoTests)|tostring) + " incomplete</span>\n"
               ' | sed -e 's/"/\\"/g'
-      - name: Add status
+      - name: Successful status
         uses: LouisBrunner/checks-action@v1.1.1
         if: ${{ success() }}
         with:

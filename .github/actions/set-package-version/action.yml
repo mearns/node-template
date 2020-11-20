@@ -1,0 +1,60 @@
+name: Set Package Version
+author: Brian Mearns
+
+description: Update the build-time version in package.json to give this build a unique version string.
+
+branding:
+  icon: bookmark
+  color: yellow
+
+outputs:
+  version:
+    description: Your new version string.
+    value: ${{ steps.version.outputs.version }}
+
+runs:
+  using: composite
+  steps:
+    - name: Extract base version
+      uses: sergeysova/jq-action@v2
+      id: base-version
+      with:
+        cmd: jq --raw-output .version package.json
+    - name: Determine version string
+      uses: ./.github/actions/determine-version
+      id: version
+      with:
+        base-version: ${{ steps.base-version.outputs.value }}
+    - name: Update package.json
+      run: |2
+          npm --no-git-tag-version version "${{ steps.version.outputs.version }}"
+    - name: Find version
+      id: find-version
+      run: |2
+        echo "::set-output name=line::$( grep -n '"version"' package.json | awk 'BEGIN { FS = ":" } ; { print $1 }' )"
+        echo "::set-output name=col-start::$( grep '"version"' package.json |  sed -e 's/^\(.*\)"version".*/\1/' | wc -c )"
+        echo "::set-output name=col-end::$( grep '"version"' package.json |  sed -e 's/^\(.*"version"\s*:\s*"[^"]"\).*/\1/' | wc -c )"
+    - name: Report Version
+      uses: LouisBrunner/checks-action@v1.1.1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: Version
+        conclusion: neutral
+        output: |2
+          {
+            "summary": "Unique version string created",
+            "text_description": "The version string for this build has been set to **${{ steps.version.outputs.version }}**"
+          }
+        annotations: |2
+          [
+            {
+              "path": "package.json",
+              "start_line": ${{ steps.find-version.outputs.line }},
+              "end": ${{ steps.find-version.outputs.line }},
+              "start_column": ${{ steps.find-version.outputs.col-start }},
+              "end_column": ${{ steps.find-version.outputs.col-end }},
+              "annotation_level": "notice",
+              "message": "Version number for build set to ${{ steps.version.outputs.version }}",
+              "title": "Build version"
+            }
+          ]
