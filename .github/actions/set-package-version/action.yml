@@ -14,4 +14,4 @@ outputs:
 
 runs:
   using: node12
-  main: $GITHUB_ACTION_PATH/main.js
+  main: main.js
