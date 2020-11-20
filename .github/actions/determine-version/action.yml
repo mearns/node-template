@@ -9,12 +9,13 @@ inputs:
 outputs:
   version:
     description: Your new version string.
-    value: ${{ steps.generate-version-string.outputs.version-string }}
+    value: ${{ steps.generate-version-string.outputs.version }}
 runs:
   using: composite
   steps:
     - name: Determine version
       shell: bash
+      id: generate-version-string
       env:
         BASE_VERSION: ${{ inputs.base-version }}
       run: |2
