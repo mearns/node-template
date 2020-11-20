@@ -7,6 +7,12 @@ async function enter() {
     const baseVersion = pacakgeData.version;
 
     core.info(`Found base version ${baseVersion}`);
+
+    const match = /([0-9]+)\.([0-9]+)\.([0-9]+)(-[^+]+)?(\+.*)?$/.exec(
+        baseVersion
+    );
+    const [, major, minor, patch, preRelease, meta] = match;
+    core.info("Found these:", { major, minor, patch, preRelease, meta });
 }
 
 async function main() {
