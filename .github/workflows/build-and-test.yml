@@ -22,8 +22,10 @@ jobs:
         with:
           base-version: ${{ steps.base-version.outputs.value }}
       - name: Report version
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |2
-          echo "${{ steps.version.outputs.version }}"
+          echo "$VERSION"
       - name: Update package.json
         uses: sergeysova/jq-action@v2
         id: update-package

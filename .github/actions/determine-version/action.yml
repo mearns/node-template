@@ -40,4 +40,6 @@ runs:
             SLUG=$( echo "$GITHUB_REF" | sed -E 's/^refs\/^[\/]*\/(.*)/\1/' | sed -E 's/[^a-zA-Z0-9_-]/-/g' )
             PRE_RELEASE="${PRE_RELEASE:--}${PRE_RELEASE:+.}blood.${REF_TYPE}.${SLUG}"
         fi
-        echo "::set-output name=version::$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION$PRE_RELEASE$META"
+        VERSION="$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION$PRE_RELEASE$META"
+        echo "Determined version: $VERSION"
+        echo "::set-output name=version::$VERSION"
