@@ -30,7 +30,13 @@ jobs:
       - name: Add Checks
         uses: LouisBrunner/checks-action@v1
         with:
-          token:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Version
+          output: |2
+            {
+              "summary": "Unique version string created",
+              "text_description": "The version string for this build has been set to **${{ steps.version.outputs.version }}**"
+            }
       - name: Install Dependencies
         run: npm ci
       - name: Build
