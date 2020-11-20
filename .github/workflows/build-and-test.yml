@@ -2,9 +2,6 @@ name: Build and Test
 
 on: [push]
 
-env:
-  NODE_VERSION: 12
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: ${{ NODE_VERSION }}
+          node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: Extract base version
         uses: sergeysova/jq-action@v2
