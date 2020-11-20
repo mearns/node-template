@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BASE_VERSION="${{ inputs.base-version }}"
+BASE_VERSION="${INPUTS_BASE_VERSION}"
 MAJOR_VERSION=$( echo "$BASE_VERSION" | sed -E 's/([0-9]+)\..*/\1/' )
 MINOR_VERSION=$( echo "$BASE_VERSION" | sed -E 's/[0-9]+\.([0-9]+)\..*/\1/' )
 PATCH_VERSION=$( echo "$BASE_VERSION" | sed -E 's/[0-9]+\.[0-9]+\.([0-9]+).*/\1/' )
