@@ -49,12 +49,15 @@ jobs:
         run: |2
           rm -rf node_modules/
           npm ci --production
-          mkdir -p node_modules
+          mkdir -p node_modules/
+          mkdir -p dist/
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: package
-          path: .
+          path:
+            - package.json
+            - dist
 
   check:
     runs-on: ubuntu-latest
