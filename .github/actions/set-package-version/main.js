@@ -1,6 +1,5 @@
 const core = require("@actions/core");
 const fs = require("fs").promises;
-const glob = require("@actions/glob");
 
 async function enter() {
     const packageData = JSON.parse(fs.readFile("package.json", "utf-8"));
