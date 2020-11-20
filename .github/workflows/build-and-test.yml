@@ -26,12 +26,12 @@ jobs:
           VERSION: ${{ steps.version.outputs.version }}
         run: |2
           echo "$VERSION"
+          echo "${VERSION}"
+          echo "${{ VERSION }}"
+          echo "${{ steps.version.outputs.version }}"
       - name: Update package.json
-        uses: sergeysova/jq-action@v2
-        id: update-package
-        with:
-          cmd: |2
-              npm version "${{ steps.version.outputs.version }}"
+        run: |2
+            npm version "${{ steps.version.outputs.version }}"
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
