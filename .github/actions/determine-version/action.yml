@@ -14,6 +14,7 @@ runs:
   using: composite
   steps:
     - name: Determine version
+      shell: bash
       run: |2
         BASE_VERSION="${{ inputs.base-version }}"
         MAJOR_VERSION=$( echo "$BASE_VERSION" | sed -E 's/([0-9]+)\..*/\1/' )
