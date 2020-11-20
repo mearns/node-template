@@ -27,7 +27,7 @@ jobs:
       - name: Find version
         id: find-version
         run: |2
-          echo "::set-output name=version-line::$$( echo grep -n '"version"' package.json | awk 'BEGIN { FS = ":" } ; { print $1 }' )"
+          echo "::set-output name=version-line::$( echo grep -n '"version"' package.json | awk 'BEGIN { FS = ":" } ; { print $1 }' )"
       - name: Report Version
         uses: LouisBrunner/checks-action@v1.1.1
         with:
