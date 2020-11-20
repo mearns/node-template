@@ -55,9 +55,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: package
-          path:
-            - package.json
-            - dist
+          path: |2
+            package.json
+            dist/
 
   check:
     runs-on: ubuntu-latest
