@@ -1,15 +1,24 @@
 name: Determine Version
+author: Brian Mearns
+
 description: Determine the version string to use based on a base version, the git branch, and the current run.
+
+branding:
+  icon: bookmark
+  color: purple
+
 inputs:
   base-version:
     description: >2
       The base version string. This should be a semver string. The patch version will generally be overwritten
       and the prerelease string, may be modified (or created, if it doesn't exist yet).
     required: true
+
 outputs:
   version:
     description: Your new version string.
     value: ${{ steps.generate-version-string.outputs.version }}
+
 runs:
   using: composite
   steps:
