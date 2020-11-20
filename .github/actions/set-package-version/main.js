@@ -3,7 +3,7 @@ const fs = require("fs").promises;
 
 async function enter() {
     const packageData = JSON.parse(await fs.readFile("package.json", "utf-8"));
-    const baseVersion = pacakgeData.version;
+    const baseVersion = packageData.version;
 
     core.info(`Found base version ${baseVersion}`);
 
