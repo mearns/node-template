@@ -28,7 +28,7 @@ jobs:
         run: |2
             npm --no-git-tag-version version "${{ steps.version.outputs.version }}"
       - name: Add Checks
-        uses: LouisBrunner/checks-action@v1
+        uses: LouisBrunner/checks-action@v1.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: Version
