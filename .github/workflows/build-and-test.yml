@@ -1,0 +1,40 @@
+name: Build and Test
+
+on: [push]
+
+env:
+  NODE_VERSION: 12
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: $NODE_VERSION
+          registry-url: https://registry.npmjs.org/
+      - name: Extract base version
+        uses: sergeysova/jq-action@v2
+        id: base-version
+        with:
+          cmd: jq --raw-output .version package.json
+      - name: Determine version string
+        uses: ./.github/actions/determine-version
+        id: version
+        with:
+          base-version: ${{ steps.base-version.outputs.value }}
+      - name: Report version
+        run: |2
+          echo "${{ steps.version.outputs.version }}"
+      - name: Update package.json
+        uses: sergeysova/jq-action@v2
+        id: update-package
+        with:
+          cmd: |2
+              npm version "${{ steps.version.outputs.version }}"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: package
+          path: package.json
