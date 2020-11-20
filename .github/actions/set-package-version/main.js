@@ -11,7 +11,15 @@ async function enter() {
         baseVersion
     );
     const [, major, minor, patch, preRelease, meta] = match;
-    core.info("Found these:", { major, minor, patch, preRelease, meta });
+    core.info(
+        `Found these: ${JSON.stringify({
+            major,
+            minor,
+            patch,
+            preRelease,
+            meta
+        })}`
+    );
 }
 
 async function main() {
