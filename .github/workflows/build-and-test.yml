@@ -21,13 +21,14 @@ jobs:
         id: version
         with:
           base-version: ${{ steps.base-version.outputs.value }}
-      - name: Report version
-        run: |2
-          echo "${{ steps.version.outputs.version }}"
       - name: Update package.json
         run: |2
             npm --no-git-tag-version version "${{ steps.version.outputs.version }}"
-      - name: Add Checks
+      - name: Find version
+        id: find-version
+        run: |2
+          echo "::set-output name=version-line::$$( echo grep -n '"version"' package.json | awk 'BEGIN { FS = ":" } ; { print $1 }' )"
+      - name: Report Version
         uses: LouisBrunner/checks-action@v1.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -36,7 +37,7 @@ jobs:
           output: |2
             {
               "summary": "Unique version string created",
-              "text_description": "The version string for this build has been set to **${{ steps.version.outputs.version }}**"
+              "text_description": "The version string for this build has been set to **${{ steps.version.outputs.version }}** on line *${{ steps.find-version.outputs.version-line }}*"
             }
       - name: Install Dependencies
         run: npm ci
