@@ -44,7 +44,7 @@
   },
   "logo": "logo.png",
   "devDependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.9.1",
     "copyfiles": "^2.4.0",
     "eslint": "^7.13.0",
     "eslint-config-mearns": "git+https://github.com/mearns/eslint-config-mearns.git#v0.3.0",
